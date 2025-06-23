@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Take Store</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+</head>
+<body>
+
+    <header>
+        <h1>Take Store</h1>
+        <input type="text" id="search-input" placeholder="Поиск приложений...">
+    </header>
+
+    <main>
+        <section class="platform-selector">
+            <button data-platform="all" class="active">Все</button>
+            <button data-platform="windows">Windows</button>
+            <button data-platform="macos">macOS</button>
+            <button data-platform="linux">Linux</button>
+            <button data-platform="bsd">BSD</button>
+        </section>
+
+        <section class="app-grid">
+            <!-- Приложения будут добавлены сюда JavaScript -->
+        </section>
+    </main>
+
+    <footer>
+        <p>&copy; 2023 Take Store</p>
+    </footer>
+
+    <script>
+        const apps = [
+            {name: "Google Chrome", description: "Браузер от Google", platforms: ["windows", "macos", "linux", "bsd"], link: "https://www.google.com/chrome/"},
+            {name: "Mozilla Firefox", description: "Браузер от Mozilla", platforms: ["windows", "macos", "linux", "bsd"], link: "https://www.mozilla.org/firefox/"},
+            {name: "Microsoft Edge", description: "Браузер от Microsoft", platforms: ["windows", "macos"], link: "https://www.microsoft.com/edge"},
+            {name: "Brave", description: "Браузер, ориентированный на приватность", platforms: ["windows", "macos", "linux", "bsd"], link: "https://brave.com/"},
+            {name: "Apache OpenOffice", description: "Бесплатный офисный пакет", platforms: ["windows", "macos", "linux"], link: "https://www.openoffice.org/download/"},
+            {name: "LibreOffice", description: "Бесплатный офисный пакет", platforms: ["windows", "macos", "linux"], link: "https://www.libreoffice.org/download/download/"},
+            {name: "Microsoft Office", description: "Популярный офисный пакет (платный)", platforms: ["windows", "macos"], link: "https://www.microsoft.com/microsoft-365"},
+            {name: "Wine", description: "Запускайте приложения Windows на других ОС", platforms: ["windows", "macos", "linux"], link: "https://www.winehq.org/download"},
+            {name: "iTunes", description: "Медиаплеер и менеджер устройств Apple", platforms: ["windows", "macos"], link: "https://support.apple.com/en-us/HT210384"},
+            {name: "3uTools", description: "Инструмент для управления устройствами iOS", platforms: ["windows"], link: "http://www.3u.com/"},
+            {name: "TikTok", description: "Популярное приложение для коротких видео", platforms: ["windows", "macos", "linux", "bsd"], link: "https://www.tiktok.com/"},
+            {name: "YouTube", description: "Видеохостинг от Google", platforms: ["windows", "macos", "linux", "bsd"], link: "https://www.youtube.com/"},
+            {name: "Instagram", description: "Социальная сеть для обмена фото и видео", platforms: ["windows", "macos", "linux", "bsd"], link: "https://www.instagram.com/"},
+            {name: "Facebook", description: "Популярная социальная сеть", platforms: ["windows", "macos", "linux", "bsd"], link: "https://www.facebook.com/"},
+            {name: "Twitter", description: "Социальная сеть для обмена короткими сообщениями", platforms: ["windows", "macos", "linux", "bsd"], link: "https://twitter.com/"},
+            {name: "Discord", description: "Платформа для общения, особенно популярная среди геймеров", platforms: ["windows", "macos", "linux", "bsd"], link: "https://discord.com/"},
+            {name: "Spotify", description: "Сервис потоковой передачи музыки", platforms: ["windows", "macos", "linux", "bsd"], link: "https://www.spotify.com/"},
+            {name: "VLC Media Player", description: "Бесплатный медиаплеер", platforms: ["windows", "macos", "linux", "bsd"], link: "https://www.videolan.org/vlc/"},
+            {name: "GIMP", description: "Бесплатный редактор изображений", platforms: ["windows", "macos", "linux", "bsd"], link: "https://www.gimp.org/"},
+            {name: "Inkscape", description: "Бесплатный векторный графический редактор", platforms: ["windows", "macos", "linux", "bsd"], link: "https://inkscape.org/"},
+            {name: "Blender", description: "Бесплатный инструмент для 3D-моделирования", platforms: ["windows", "macos", "linux", "bsd"], link: "https://www.blender.org/"},
+            {name: "Audacity", description: "Бесплатный аудиоредактор", platforms: ["windows", "macos", "linux", "bsd"], link: "https://www.audacityteam.org/"},
+            {name: "Visual Studio Code", description: "Бесплатный редактор кода от Microsoft", platforms: ["windows", "macos", "linux"], link: "https://code.visualstudio.com/"},
+            {name: "Notepad++", description: "Бесплатный редактор кода для Windows", platforms: ["windows"], link: "https://notepad-plus-plus.org/"},
+            {name: "Sublime Text", description: "Платный редактор кода", platforms: ["windows", "macos", "linux"], link: "https://www.sublimetext.com/"},
+            {name: "Atom", description: "Бесплатный редактор кода (больше не поддерживается)", platforms: ["windows", "macos", "linux"], link: "https://atom.io/"},
+            {name: "Git", description: "Система контроля версий", platforms: ["windows", "macos", "linux"], link: "https://git-scm.com/"},
+            {name: "Docker Desktop", description: "Платформа для контейнеризации приложений", platforms: ["windows", "macos", "linux"], link: "https://www.docker.com/products/docker-desktop/"},
+            {name: "VirtualBox", description: "Программа для виртуализации", platforms: ["windows", "macos", "linux"], link: "https://www.virtualbox.org/"},
+            {name: "VMware Workstation Player", description: "Программа для виртуализации (бесплатная для личного использования)", platforms: ["windows", "linux"], link: "https://www.vmware.com/products/workstation-player.html"},
+            {name: "Telegram", description: "Мессенджер с акцентом на безопасность", platforms: ["windows", "macos", "linux", "bsd"], link: "https://telegram.org/"},
+            {name: "Skype", description: "Сервис для видеозвонков и обмена сообщениями", platforms: ["windows", "macos", "linux", "bsd"], link: "https://www.skype.com/"},
+            {name: "Zoom", description: "Платформа для видеоконференций", platforms: ["windows", "macos", "linux", "bsd"], link: "https://zoom.us/"},
+            {name: "Slack", description: "Платформа для корпоративного общения", platforms: ["windows", "macos", "linux", "bsd"], link: "https://slack.com/"},
+            {name: "TeamViewer", description: "Программа для удаленного доступа", platforms: ["windows", "macos", "linux", "bsd"], link: "https://www.teamviewer.com/"},
+            {name: "AnyDesk", description: "Программа для удаленного доступа", platforms: ["windows", "macos", "linux", "bsd"], link: "https://anydesk.com/en"},
+            {name: "qBittorrent", description: "Бесплатный торрент-клиент", platforms: ["windows", "macos", "linux", "bsd"], link: "https://www.qbittorrent.org/"},
+            {name: "Transmission", description: "Бесплатный торрент-клиент", platforms: ["windows", "macos", "linux", "bsd"], link: "https://transmissionbt.com/"},
+            {name: "HandBrake", description: "Бесплатный конвертер видео", platforms: ["windows", "macos", "linux"], link: "https://handbrake.fr/"},
+            {name: "OBS Studio", description: "Бесплатная программа для записи и потоковой передачи видео", platforms: ["windows", "macos", "linux"], link: "https://obsproject.com/"},
+            {name: "Discord", description: "Платформа для общения, особенно популярная среди геймеров", platforms: ["windows", "macos", "linux", "bsd"], link: "https://discord.com/"},
+            {name: "Steam", description: "Платформа для покупки и запуска игр", platforms: ["windows", "macos", "linux"], link: "https://store.steampowered.com/"},
+            {name: "Epic Games Store", description: "Платформа для покупки и запуска игр", platforms: ["windows", "macos"], link: "https://www.epicgames.com/store/"},
+            {name: "GOG Galaxy", description: "Платформа для покупки и запуска игр", platforms: ["windows", "macos"], link: "https://www.gog.com/galaxy"},
+            {name: "uTorrent", description: "Популярный торрент-клиент (следите за рекламой)", platforms: ["windows"], link: "https://www.utorrent.com/"},
+            {name: "7-Zip", description: "Бесплатный архиватор файлов", platforms: ["windows"], link: "https://www.7-zip.org/"},
+            {name: "WinRAR", description: "Популярный архиватор файлов (платный)", platforms: ["windows"], link: "https://www.win-rar.com/"},
+            {name: "Evernote", description: "Сервис для создания заметок", platforms: ["windows", "macos", "linux", "bsd"], link: "https://evernote.com/"},
+            {name: "Notion", description: "Сервис для организации задач и заметок", platforms: ["windows", "macos", "linux", "bsd"], link: "https://www.notion.so/"},
+            {name: "Trello", description: "Инструмент для управления проектами", platforms: ["windows", "macos", "linux", "bsd"], link: "https://trello.com/"},
+            {name: "Asana", description: "Инструмент для управления проектами", platforms: ["windows", "macos", "linux", "bsd"], link: "https://asana.com/"},
+            {name: "Slack", description: "Платформа для корпоративного общения", platforms: ["windows", "macos", "linux", "bsd"], link: "https://slack.com/"},
+            {name: "Discord", description: "Платформа для общения, особенно популярная среди геймеров", platforms: ["windows", "macos", "linux", "bsd"], link: "https://discord.com/"},
+            {name: "Spotify", description: "Сервис потоковой передачи музыки", platforms: ["windows", "macos", "linux", "bsd"], link: "https://www.spotify.com/"},
+            {name: "VLC Media Player", description: "Бесплатный медиаплеер", platforms: ["windows", "macos", "linux", "bsd"], link: "https://www.videolan.org/vlc/"},
+        ];
+
+        const platformButtons = document.querySelectorAll('.platform-selector button');
+        const appGrid = document.querySelector('.app-grid');
+        const searchInput = document.getElementById('search-input');
+
+        function createAppCard(app) {
+            const card = document.createElement('div');
+            card.classList.add('app-card');
+            card.dataset.platforms = app.platforms.join(',');
+
+            card.innerHTML = `
+                <h2>${app.name}</h2>
+                <p>${app.description}</p>
+                <a href="${app.link}" target="_blank">Скачать</a>
+            `;
+
+            return card;
+        }
+
+        function displayApps(platform = 'all', searchTerm = '') {
+            appGrid.innerHTML = '';
+
+            apps.forEach(app => {
+                if ((platform === 'all' || app.platforms.includes(platform)) &&
+                    (searchTerm === '' || app.name.toLowerCase().includes(searchTerm.toLowerCase()) || app.description.toLowerCase().includes(searchTerm.toLowerCase()))) { //Поиск и по описанию
+                    const card = createAppCard(app);
+                    appGrid.appendChild(card);
+                }
+            });
+        }
+
+        displayApps();
+
+        platformButtons.forEach(button => {
+            button.addEventListener('click', () => {
+                const platform = button.dataset.platform;
+
+                platformButtons.forEach(btn => btn.classList.remove('active'));
+                button.classList.add('active');
+
+                displayApps(platform, searchInput.value);
+            });
+        });
+
+        searchInput.addEventListener('input', () => {
+            displayApps(document.querySelector('.platform-selector button.active').dataset.platform, searchInput.value);
+        });
+    </script>
+
+</body>
+</html>
